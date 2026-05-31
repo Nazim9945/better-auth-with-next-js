@@ -1,18 +1,22 @@
-import { headers } from "next/headers"
-import { auth } from "../lib/auth"
-import Dashclient from "./dash-client"
-import { redirect } from "next/navigation";
+import React from 'react'
+import DashClient from './DashClient'
+import { auth } from '../lib/auth'
+import { headers } from 'next/headers'
+import { redirect } from 'next/navigation'
 
-
-
-export  async function Dashboard(){
-         const session = await auth.api.getSession({
-           headers: await headers(),
-         });
-         if (!session) {
-            redirect('/')
-         }
-        return <Dashclient/>
-
-
+const page = async() => {
+    const session=await auth.api.getSession({
+        headers:await headers()
+    })
+    console.log(session)
+    if(!session){
+        redirect('/')
+    }
+  return (
+    <div>
+        <DashClient/>
+    </div>
+  )
 }
+
+export default page

@@ -1,11 +1,11 @@
 "use client"
 
-import { useRouter } from "next/router"
+import { useRouter } from "next/navigation"
 import { signOut } from "../action/user"
 
 
 
-const Dashclient = () => {
+const DashClient = () => {
     const router=useRouter()
     const handler=async()=>{
             await signOut()
@@ -19,6 +19,6 @@ const Dashclient = () => {
   )
 }
 
-export default Dashclient
+export default DashClient
 
 

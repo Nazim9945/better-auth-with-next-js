@@ -1,19 +1,28 @@
 ﻿"use client";
 
 import { FormEvent, useState } from "react";
-import { signUp } from "@/app/action/user";
+import { signUp, signUpGoogle } from "@/app/action/user";
+import { redirect } from "next/navigation";
+import { FaGoogle } from "react-icons/fa";
 
 
 export default function SignupPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const handlerGoogle=async()=>{
+    const result=await signUpGoogle()
+    console.log(result)
+  }
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
     console.log({ name, email, password });
-    await signUp(email,name,password)
+    await signUp(email,password,name) 
+    setName("")
+    setEmail("")
+    setPassword("")
+    redirect('/dashboard')
   };
 
   return (
@@ -73,6 +82,10 @@ export default function SignupPage() {
             Sign up
           </button>
         </form>
+        <button onClick={handlerGoogle} className="w-full mt-4 bg-gray-700 rounded-2xl px-4 py-3 text-base font-semibold text-white transition hover:bg-sky-400 focus:outline-none focus:ring-2 focus:ring-sky-500/50 flex gap-2 items-center justify-center">
+        <FaGoogle/>
+        <span>Google</span>
+        </button>
       </section>
     </main>
   );

@@ -1,19 +1,25 @@
 "use client";
 
 import {  useState } from "react";
-import { signIn } from "@/app/action/user";
+import { signIn, signUpGoogle } from "@/app/action/user";
+import { redirect } from "next/navigation";
+import { FaGoogle } from "react-icons/fa";
 
 
 export default function SigninPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+ const handlerGoogle = async () => {
+   await signUpGoogle();
+ };
   const handleSubmit = async (event:React.FormEvent) => {
     event.preventDefault();
 
     console.log({ email, password });
     await signIn(email,password)
-    
+     setEmail("");
+     setPassword("");
+     redirect('/dashboard')
   };
 
   return (
@@ -23,7 +29,7 @@ export default function SigninPage() {
           <p className="text-sm uppercase tracking-[0.3em] text-sky-400">
             Create an account
           </p>
-          <h1 className="mt-4 text-3xl font-semibold text-white">Sign up</h1>
+          <h1 className="mt-4 text-3xl font-semibold text-white">Sign in</h1>
           <p className="mt-2 text-slate-400">
             Simple registration with name, email, and password.
           </p>
@@ -58,9 +64,13 @@ export default function SigninPage() {
             type="submit"
             className="w-full rounded-2xl bg-sky-500 px-4 py-3 text-base font-semibold text-white transition hover:bg-sky-400 focus:outline-none focus:ring-2 focus:ring-sky-500/50"
           >
-            Sign up
+            Sign in
           </button>
         </form>
+        <button onClick={handlerGoogle} className="w-full mt-4 bg-gray-700 rounded-2xl px-4 py-3 text-base font-semibold text-white transition hover:bg-sky-400 focus:outline-none focus:ring-2 focus:ring-sky-500/50 flex gap-2 items-center justify-center">
+                <FaGoogle/>
+                <span>Google</span>
+                </button>
       </section>
     </main>
   );

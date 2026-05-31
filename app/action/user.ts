@@ -1,6 +1,7 @@
 "use server";
 import { auth } from "@/app/lib/auth";
 import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 
 const signUp = async (email: string, password: string,name:string) => {
   const result=await auth.api.signUpEmail({
@@ -8,23 +9,33 @@ const signUp = async (email: string, password: string,name:string) => {
       email,
       password,
       name,
-      callbackURL:'/dashboard'
+      callbackURL:'/kurama'
     },
   });
 return result
 };
 const signIn = async (email:string,password:string) => {
-  const result= await auth.api.signInEmail({
+  const result = await auth.api.signInEmail({
     body: {
       email,
       password,
-      callbackURL:'/dashboard'
+      callbackURL: "/kurama",
     },
   });
   return result
   
 };
-
+const signUpGoogle=async()=>{
+  const {url}=await auth.api.signInSocial({
+      body:{
+        provider:"google",
+        callbackURL:"/dashboard"
+      }
+  })
+  if(url){
+    redirect(url)
+  }
+}
 const signOut=async ()=>{
     await auth.api.signOut({
         headers:await headers()
@@ -32,4 +43,4 @@ const signOut=async ()=>{
     
 }
 
-export {signIn,signOut,signUp}
+export {signIn,signOut,signUp,signUpGoogle}
