@@ -1,9 +1,31 @@
-import Image from "next/image";
 
-export default function Home() {
+import Link from "next/link";
+
+
+export default  function Home() {
+ 
   return (
-   <div>
-    Welcome to home page
-   </div>
+    <div className="min-h-screen bg-teal-800/80 flex items-center justify-center ">
+      <div className=" rounded-md h-20 w-200 bg-gray-300 flex items-center justify-center gap-4 ">
+         
+          
+            <Link
+              href={"/signin"}
+              className="py-2 px-4 bg-blue-400 text-white cursor-pointer rounded-md"
+            >
+              signin
+            </Link>
+            <Link
+              href={"/signup"}
+              className="py-2 px-4 bg-blue-400 text-white cursor-pointer rounded-md"
+            >
+              signup
+            </Link>
+          
+        
+        
+        
+      </div>
+    </div>
   );
 }
